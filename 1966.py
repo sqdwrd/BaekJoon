@@ -11,7 +11,6 @@
 '''
 
 
-
 def main(len_data: int):
     if len_data == 0:
         return 0
@@ -24,11 +23,14 @@ def main(len_data: int):
     main(len_data - 1)
 
 
-def process_doc(queue: list[list[int]], target_index, iteration_counter: int = 0) -> int:
-    max_importance = find_max_importance(queue)
+def process_doc(queue: list[list[int]], target_index, max_importance=None, iteration_counter: int = 0) -> int:
+    if (max_importance is None):
+        max_importance = find_max_importance(queue)
 
     if (queue[0][1] >= max_importance):
         processed = queue.pop(0)
+
+        max_importance = None
         iteration_counter = iteration_counter + 1
 
         if (processed[0] == target_index):
@@ -36,7 +38,7 @@ def process_doc(queue: list[list[int]], target_index, iteration_counter: int = 0
     else:
         queue.append(queue.pop(0))
 
-    return process_doc(queue, target_index, iteration_counter)
+    return process_doc(queue, target_index, max_importance, iteration_counter)
 
 
 def find_max_importance(queue: list[list[int]], importance_candidate: int = 0):
