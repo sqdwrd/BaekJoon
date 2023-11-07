@@ -1,3 +1,7 @@
+import sys
+input = sys.stdin.readline
+
+
 def main():
     k = int(input())
     queue = []
